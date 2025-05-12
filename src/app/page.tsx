@@ -1,103 +1,199 @@
-import Image from "next/image";
+'use client';
+
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useState } from 'react';
+import SplashScreen from './components/SplashScreen';
+import Navbar from './components/Navbar';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [showMain, setShowMain] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  return (
+    <>
+      <SplashScreen onComplete={() => setShowMain(true)} />
+      
+      {showMain && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <Navbar />
+          {/* Hero Section with Animation */}
+          <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden px-4">
+            {/* Animated Background Elements */}
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-white/30 rounded-full"
+                  initial={{
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    scale: Math.random() * 1.5,
+                  }}
+                  animate={{
+                    y: [null, Math.random() * window.innerHeight],
+                    x: [null, Math.random() * window.innerWidth],
+                  }}
+                  transition={{
+                    duration: Math.random() * 8 + 8,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Main Content */}
+            <div className="relative z-10 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4">
+                  Code Cubicle 4
+                </h1>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <p className="text-lg md:text-xl text-gray-300 mb-6">
+                  Back at it yet again by Geek Room
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0"
+              >
+                <a
+                  href="https://code-cubicle-2.devfolio.co"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition duration-300"
+                >
+                  Register Now
+                </a>
+                <Link
+                  href="/about"
+                  className="inline-block border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition duration-300"
+                >
+                  Learn More
+                </Link>
+              </motion.div>
+
+              {/* Event Details */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="mt-10 text-white"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  <div className="bg-white/10 backdrop-blur-lg p-6 rounded-lg">
+                    <h3 className="text-lg font-bold mb-1">Online Round</h3>
+                    <p className="text-gray-300">June 29th, 2024</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-lg p-6 rounded-lg">
+                    <h3 className="text-lg font-bold mb-1">Final Round</h3>
+                    <p className="text-gray-300">July 5th, 2024</p>
+                    <p className="text-sm text-gray-400">Microsoft Office, Hyderabad</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Scroll Indicator */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+              >
+                <motion.div
+                  animate={{
+                    y: [0, 10, 0],
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                  className="text-white/50"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
+                  </svg>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Quick Info Section */}
+          <section className="py-20 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl mb-4">🏆</div>
+                  <h3 className="text-lg font-bold mb-1">Win Amazing Prizes</h3>
+                  <p className="text-gray-600">
+                    Cash prizes, Microsoft internships, and exclusive swag
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl mb-4">🚀</div>
+                  <h3 className="text-lg font-bold mb-1">Build Something Amazing</h3>
+                  <p className="text-gray-600">
+                    Create innovative solutions with cutting-edge technologies
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl mb-4">🤝</div>
+                  <h3 className="text-lg font-bold mb-1">Network & Learn</h3>
+                  <p className="text-gray-600">
+                    Connect with industry experts and fellow developers
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </section>
+        </motion.div>
+      )}
+    </>
   );
 }
